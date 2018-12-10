@@ -1,8 +1,10 @@
 // Dependencies
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 var express = require("express");
-// Body-parser allows us to receive our information back in JSON form so it is easy to manipulate
+// Body-parser allows us to receive our information back in JSON form so it is easy to manipulate **
 var bodyParser = require("body-parser");
+
+var path = require("path");
 
 
 
@@ -12,11 +14,11 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
-// directing server to "route" files.
+
 // a how to respond when users visit or request data from different URLs.
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
