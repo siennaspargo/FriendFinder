@@ -1,20 +1,16 @@
-// Dependencies
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// generate app quickly, http helper in redirection, caching, high performance
 var express = require("express");
-// Body-parser allows us to receive our information back in JSON form so it is easy to manipulate **
-var bodyParser = require("body-parser");
+// provides utilities for working with file and directory paths
+var path = require("path");
 
 
-
-// Sets up the Express App
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
 
-// var jsonParser = bodyParser.json()
-// var urlencodeParser = bodyParser.urlencoded({ extended: false})
+var jsonParser = bodyParser.json()
+var urlencodeParser = bodyParser.urlencoded({ extended: false})
 
 
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -31,9 +27,6 @@ require("./app/routing/htmlRoutes")(app);
 require("./app/routing/htmlRoutes.js")(app);
 require("./app/routing/apiRoutes.js")(app);
 
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-// LISTENER
-// Server to start listening
 
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
