@@ -1,7 +1,7 @@
 // an array of objects
 
-var friends = [
-
+var dateTypes = [
+  // 31
   {
     "name":"Fancy",
     "photo":"https://media.giphy.com/media/l41Yx9TdSmBwdDJD2/giphy.gif",
@@ -18,6 +18,7 @@ var friends = [
         2
       ]
   },
+// 37
   {
     "name":"Tinder",
     "photo":"https://media.giphy.com/media/kbW7QyL5arfEI/giphy.gif",
@@ -34,6 +35,7 @@ var friends = [
         5
       ]
   },
+  // 36
   {
     "name":"Thirsty",
     "photo":"https://media.giphy.com/media/3oEdvbZW596mXn9CJW/giphy.gif",
@@ -50,6 +52,7 @@ var friends = [
         4
       ]
   },
+  // 28
   {
     "name":"Airhead",
     "photo":"https://media.giphy.com/media/3oEdvbZW596mXn9CJW/giphy.gif",
@@ -66,6 +69,7 @@ var friends = [
         2
       ]
   },
+  // 32
   {
     "name":"Awkward",
     "photo":"https://media.giphy.com/media/FlQT9XwaGaDEA/giphy.gif",
@@ -82,6 +86,7 @@ var friends = [
         1
       ]
   }, 
+  // 32
   {
     "name":"Uninterested",
     "photo":"https://media.giphy.com/media/H5R1fe4mAhz68/giphy.gif",
@@ -101,4 +106,4 @@ var friends = [
 ]
 
 // export the array
-module.exports = friends;
+module.exports = dateTypes;
