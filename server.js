@@ -4,8 +4,6 @@ var express = require("express");
 // Body-parser allows us to receive our information back in JSON form so it is easy to manipulate **
 var bodyParser = require("body-parser");
 
-var path = require("path");
-
 
 
 // Sets up the Express App
@@ -14,7 +12,12 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// var jsonParser = bodyParser.json()
+// var urlencodeParser = bodyParser.urlencoded({ extended: false})
+
+
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(bodyParser.json());
 
 
@@ -24,6 +27,9 @@ app.use(bodyParser.json());
 
 require("./app/routing/apiRoutes")(app);
 require("./app/routing/htmlRoutes")(app);
+
+require("./app/routing/htmlRoutes.js")(app);
+require("./app/routing/apiRoutes.js")(app);
 
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // LISTENER

@@ -1,26 +1,24 @@
  // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // LOAD DATA
-// We are linking our routes to a series of "data" sources.
-// These data sources hold arrays of information on table-data, waitinglist, etc.
+// linking our routes to a series of "data" sources.
+// These data sources hold arrays of information on all friends
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-var tableData = require("../data/tableData");
-var waitListData = require("../data/waitinglistData");
+var friends = require("../data/friends");
 
-
-// ===============================================================================
-// ROUTING
-// ===============================================================================
+// routing //
 
 module.exports = function(app) {
-  // API GET Requests
+    // API GET Requests
   // Below code handles when users "visit" a page.
   // In each of the below cases when a user visits a link
   // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
-  // ---------------------------------------------------------------------------
 
   app.get("/api/friends", function(req, res) {
-    res.json(tableData);
+    res.json(friends);
+  });
+  app.post("/api/friends", function(req, res) {
+    res.json(friends);
   });
 
   // API POST Requests
@@ -32,28 +30,46 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.post("/api/friends", function(req, res) {
-    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-    // It will do this by sending out the value "true" have a table
-    // req.body is available since we're using the body parsing middleware
-    if (tableData.length < 5) {
-      tableData.push(req.body);
-      res.json(true);
+
+    var userMatch = {
+      name: "",
+      photo: "",
+      friendDifference: 1000
+    };
+
+    var userData = req.body;
+    var userScores = userData.scores;
+
+    // calculate user's scores and scores of others
+    var totalDifference;
+
+    // loop through list of friends
+    for (var i = 0; i < friends.length; i++) {
+      var currentFriend = friends[i];
+      totalDifference = 0;
+
+      console.log(currentFriend.name);
+
+      // loop through scores of each friend
+      for (var x = 0; x < currentFriend.scores.length; x++) {
+        var currentFriendScore = currentFriend.scores[x];
+        var currentUserScore = userScores [x];
+
+        // calculate differende between scores and add for total difference
+        totalDifference += Math.abs(parseInt(currentUserScore) - parseInt(currentFriendScore));
+      }
+
+      // if differences is less then the differences of current best match
+      if (totalDifference <= bestMatch.friendDifference) {
+        // reset the bestMatch to be the new friend.
+        bestMatch.name = currentFriend.name;
+        bestMatch.photo = currentFriend.photo;
+        bestMatch.friendDifference = totalDifference;
+      }
     }
-    else {
-      waitListData.push(req.body);
-      res.json(false);
-    }
-  });
-
-  // ---------------------------------------------------------------------------
-  // I added this below code so you could clear out the table while working with the functionality.
-  // Don"t worry about it!
-
-  app.post("/api/clear", function(req, res) {
-    // Empty out the arrays of data
-    tableData.length = [];
-    waitListData.length = [];
-
-    res.json({ ok: true });
-  });
-};
+      // save user's data to the database
+      friends.push(userData);
+      // return json best match
+      res.json(bestMatch);
+    });
+  };
