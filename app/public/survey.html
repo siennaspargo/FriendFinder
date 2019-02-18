@@ -1,21 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <title>FriendFinder - Date Survey</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!-- css -->
-<link rel="stylesheet" href="../public/style/css/style.css">
+  <!-- Latest compiled and minified CSS & JS -->
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <!-- Font Awesome Glyphicons/Custom css -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
 <!-- EMOJI -->
 <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery Chosen -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Felipa" rel="stylesheet">
 </head>
@@ -208,44 +205,33 @@
           <button class="btn btn-default" data-dismiss="modal">Riiiiiiiiiiiiight..</button>
         </div>
       </div>
-
     </div>
   </div>
-</body>
-</html>
+
+
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 
 <script type="text/javascript">
 // Capture the form inputs
   $("#submit").on("click", function (event)
   {
     event.preventDefault();
-    // Form validation
+
     function validateForm()
     {
       var isValid = true;
-      $(".form-control").each(function ()
-      {
-        if ($(this).val() === "")
-        {
-          isValid = false;
-        }
-      });
-      $(".drop-down").each(function ()
-      {
-        if ($(this).val() === "")
-        {
+      $(".drop-down").each(function () {
+        if ($(this).val() === "") {
           isValid = false;
         }
       });
       return isValid;
     }
-    // If all required fields are filled
-    if (validateForm())
-    {
+    if (validateForm()) {
       // Create an object for the user"s data
       var userData = {
-        name: $("#name").val(),
-        photo: $("#photo").val(),
         scores: [
           $("#q1").val(),
           $("#q2").val(),
@@ -260,28 +246,25 @@
         ]
       };
       console.log(userData);
+
+      var currentURL = window.location.origin;
+
       // Using the Ajax Post to post the data
-      $.ajax({
-        url: "/api/friends",
-        data: userData,
-        traditional: true,
-        dataType: "json",
-        type: "POST",
-        success: function (data)
-        {
+
+      $.post(currentURL + "/api/dateTypes", userData, function (data) {
           console.log(data);
-          $("#matchName").text(data.matchName);
-          $("#matchImg").css("width", "200px");
-          $("#matchImg").css("height", "200px");
-          $("#matchImg").attr("src", data.matchImage);
+          $("#match-name").text(data.name);
+          // $("#match-img").css("width", "200px");
+          // $("#match-img").css("height", "200px");
+          $("#match-img").attr("src", data.photo);
           // Show the modal with the best match
-          $("#results-modal").push("toggle");
-        }
-      });
-      // if not all the inputs are inserted alert user
-    } else
-    {
+          $("#results-modal").modal("toggle");
+        })
+    } else {
       alert("Looks like you missed something; make sure you fill everything out to view your results.");
     }
   });
+
 </script>
+</body>
+</html>
